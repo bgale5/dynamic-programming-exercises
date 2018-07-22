@@ -10,9 +10,13 @@
 #include <string>
 #include <limits>
 
+#define NIL -1
 
 /* -------------------------- Function Prototypes ----------------------------*/
 int rmc(const std::vector<int> &chain, int i, int j);
+void tab_init(int size);
+
+std::vector<std::vector<int> > table;
 
 
 int main(int argc, char const *argv[])
@@ -24,6 +28,7 @@ int main(int argc, char const *argv[])
 	std::vector<int> chain;
 	for (int i = 1; i < argc; i++)
 		chain.push_back(atoi(argv[i]));
+	tab_init(chain.size());
 	std::cout << rmc(chain, 1, chain.size() - 1) << std::endl;
 	return 0;
 }
@@ -32,6 +37,8 @@ int rmc(const std::vector<int> &chain, int i, int j)
 {
 	if (i == j)
 		return 0;
+	if (table[i][j] != NIL)
+	 	return table[i][j];
 	int min_cost = std::numeric_limits<int>::max();
 	for (int k = i; k < j; k++) {
 		int cost = rmc(chain, i, k)
@@ -40,5 +47,14 @@ int rmc(const std::vector<int> &chain, int i, int j)
 		if (cost < min_cost)
 			min_cost = cost;
 	}
+	table[i][j] = min_cost;
 	return min_cost;
+}
+
+void tab_init(int size)
+{
+	table.resize(size);
+	for(auto &i : table) {
+		i.resize(size, NIL);
+	}
 }
