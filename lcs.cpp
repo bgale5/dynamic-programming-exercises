@@ -14,11 +14,11 @@
 
 /*------------- Function Prototypes ---------------------------------------- */
 int lcs(std::string X, std::string Y, int m, int n);
-void tab_init(int longer);
+void tab_init(int m, int n);
 int max(int a, int b);
 
 /*------------- Globals ---------------------------------------------------- */
-std::vector<int> table;
+std::vector<std::vector<int> > table;
 
 int main(int argc, char const *argv[])
 {
@@ -29,18 +29,9 @@ int main(int argc, char const *argv[])
 	std::string str1(argv[1]);
 	std::string str2(argv[2]);
 	int l1 = str1.length(), l2 = str2.length();
-	int longer = l1 > l2 ? l1 : l2;
-	tab_init(longer);
+	tab_init(l1, l2);
 	std::cout << "LCS: " << lcs(str1, str2, l1, l2) << std::endl;
 	return 0;
-}
-
-void tab_init(int longer)
-{
-	table.resize(longer);
-	for (int i = 0; i < longer; i++) {
-		table[i] = NIL;
-	}
 }
 
 /**
@@ -50,15 +41,28 @@ void tab_init(int longer)
  **/
 int lcs(std::string X, std::string Y, int m, int n)
 {
+	int result = NIL;
 	if (m == 0 || n == 0)
 		return 0;
+	if (table[m - 1][n - 1] != NIL)
+		return table[m - 1][n - 1];
 	if (X[m - 1] == Y[n - 1])
-		return 1 + lcs(X, Y, m - 1, n - 1);
+		result = 1 + lcs(X, Y, m - 1, n - 1);
 	else
-		return max(lcs(X, Y, m, n - 1), lcs(X, Y, m - 1, n));
+		result = max(lcs(X, Y, m, n - 1), lcs(X, Y, m - 1, n));
+	table[m - 1][n - 1] = result;
+	return result;
 }
 
 int max(int a, int b)
 {
 	return (a > b) ? a : b;
+}
+
+void tab_init(int m, int n)
+{
+	table.resize(m);
+	for (auto &i : table) {
+		i.resize(n, NIL);
+	}
 }
