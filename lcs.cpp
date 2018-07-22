@@ -1,6 +1,6 @@
 /**
  * Uses dynamic programming paradigm to compute the lowest common subsequence
- * (LCM) of two given strings
+ * (LCS) of two given strings
  * 
  * Usage: Pass two strings as command line arguments
  * Output: Prints the LCS of the two strings and then exits
@@ -24,7 +24,7 @@ int main(int argc, char const *argv[])
 {
 	if (argc < 3) {
 		std::cout << "Not enough arguments." << std::endl;
-		return -1;
+		return 0;
 	}
 	std::string str1(argv[1]);
 	std::string str2(argv[2]);
