@@ -29,8 +29,8 @@ def print_parens(parentheses, i, j):
     print_parens(parentheses, parentheses[i][j] + 1, j)
     print(')', end=' ')
 
-p = [40, 20, 30, 10, 30]
+p = [40, 20, 30, 10, 30, 50]
 res = mc(p)
 print("Min cost: ",res[0])
-print_parens(res[1], 1, len(p) - 1)
+print_parens(res[1], 0, len(p) - 1)
 print()
